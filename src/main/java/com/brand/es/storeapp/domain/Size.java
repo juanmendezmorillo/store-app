@@ -22,9 +22,24 @@ public class Size
     this.special = special;
   }
 
+  public Integer getId()
+  {
+    return id;
+  }
+
+  public void setId( Integer id )
+  {
+    this.id = id;
+  }
+
   public Stock getStock()
   {
     return stock;
+  }
+
+  public void setStock( Stock stock )
+  {
+    this.stock = stock;
   }
 
   public Boolean getBackSoon()
@@ -32,8 +47,18 @@ public class Size
     return backSoon;
   }
 
+  public void setBackSoon( Boolean backSoon )
+  {
+    this.backSoon = backSoon;
+  }
+
   public Boolean getSpecial()
   {
     return special;
+  }
+
+  public void setSpecial( Boolean special )
+  {
+    this.special = special;
   }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WebController implements WebPort
 {
-  ProductService productService;
+  private ProductService productService;
 
   public WebController( ProductService productService )
   {
@@ -20,7 +20,7 @@ public class WebController implements WebPort
   }
 
   @Override
-  public ResponseEntity<String> getProduct()
+  public ResponseEntity<String> getProductStock()
   {
     return new ResponseEntity<>(productService.getIdsProducts(), HttpStatus.OK);
   }

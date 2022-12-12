@@ -9,6 +9,7 @@ import com.brand.es.storeapp.port.out.db.DbPort;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -38,10 +39,18 @@ public class ProductService
     this.dbPort.saveStock( stock );
   }
 
+  public Optional<ProductDTO> findProductById(Integer id) {
+    return this.dbPort.findProductById( id );
+  }
+
+  public Optional<StockDTO> findStockById(Integer id) {
+    return this.dbPort.findStockById( id );
+  }
+
   public String getIdsProducts() {
 
     ProductStore productStore = new ProductStore(
-      this.dbPort.getAllProducts()
+      this.dbPort.getAllProducts().get()
         .stream()
         .map( productDTO -> modelMapper.map( productDTO, Product.class ) )
         .collect( Collectors.toList())

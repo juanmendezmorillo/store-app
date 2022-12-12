@@ -1,7 +1,5 @@
 package com.brand.es.storeapp.application.dto;
 
-import com.brand.es.storeapp.adapter.out.db.model.SizeEntity;
-
 import java.util.List;
 
 /**
@@ -11,7 +9,15 @@ public class ProductDTO
 {
   private Integer id;
   private Integer sequence;
-  private List<SizeEntity> sizes;
+  private List<SizeDTO> sizes;
+
+  public ProductDTO() {}
+
+  public ProductDTO( Integer id, Integer sequence )
+  {
+    this.id = id;
+    this.sequence = sequence;
+  }
 
   public Integer getId()
   {
@@ -33,12 +39,12 @@ public class ProductDTO
     this.sequence = sequence;
   }
 
-  public List<SizeEntity> getSizes()
+  public List<SizeDTO> getSizes()
   {
     return sizes;
   }
 
-  public void setSizes( List<SizeEntity> sizes )
+  public void setSizes( List<SizeDTO> sizes )
   {
     this.sizes = sizes;
   }

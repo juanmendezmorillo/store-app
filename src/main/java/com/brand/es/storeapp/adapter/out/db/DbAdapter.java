@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -42,32 +43,55 @@ public class DbAdapter implements DbPort
   @Override
   public void saveProduct( ProductDTO product )
   {
-    ProductEntity productEntity = modelMapper.map( product, ProductEntity.class );
-    productRepository.save( productEntity );
+    productRepository.save( modelMapper.map( product, ProductEntity.class ) );
   }
 
   @Override
   public void saveSize( SizeDTO size )
   {
-    SizeEntity sizeEntity = modelMapper.map( size, SizeEntity.class );
-    sizeRepository.save( sizeEntity );
+    sizeRepository.save( modelMapper.map( size, SizeEntity.class ) );
   }
 
   @Override
   public void saveStock( StockDTO stock )
   {
-    StockEntity stockEntity = modelMapper.map( stock, StockEntity.class );
-    stockRepository.save( stockEntity );
+    stockRepository.save( modelMapper.map( stock, StockEntity.class ) );
   }
 
   @Override
-  public List<ProductDTO> getAllProducts()
+  public Optional<ProductDTO> findProductById( Integer id )
   {
-    return productRepository
+    Optional<ProductEntity> productEntity = productRepository.findById( id );
+    if ( productEntity.isPresent() ) {
+      return Optional.of( modelMapper.map( productEntity.get(), ProductDTO.class ) );
+    }
+    return Optional.empty();
+  }
+
+  @Override
+  public Optional<StockDTO> findStockById( Integer id )
+  {
+    Optional<StockEntity> stockEntity = stockRepository.findById( id );
+    if ( stockEntity.isPresent() ) {
+      return Optional.of( modelMapper.map( stockEntity.get(), StockDTO.class ) );
+    }
+    return Optional.empty();
+  }
+
+  @Override
+  public Optional<List<ProductDTO>> getAllProducts()
+  {
+    List<ProductDTO> products =
+      productRepository
       .findAll()
       .stream()
       .map( productEntity -> modelMapper.map( productEntity, ProductDTO.class ))
       .collect(Collectors.toList());
+
+    if ( !products.isEmpty() ) {
+      return Optional.of( products );
+    }
+    return Optional.empty();
   }
 
 }

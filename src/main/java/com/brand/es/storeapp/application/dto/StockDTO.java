@@ -8,6 +8,14 @@ public class StockDTO
   private Integer id;
   private Integer quantity;
 
+  public StockDTO() {}
+
+  public StockDTO( Integer id, Integer quantity )
+  {
+    this.id = id;
+    this.quantity = quantity;
+  }
+
   public Integer getId()
   {
     return id;

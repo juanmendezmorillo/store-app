@@ -19,61 +19,12 @@ public class ProductStore
 
     List<String> result = this.products
       .stream()
-      .filter( product ->
-        ( // product 'size' type 'backsoon'
-          product.getSizes()
-            .stream()
-            .noneMatch(
-              size ->
-                size.getSpecial()
-            )
-          &&
-          product.getSizes()
-            .stream()
-            .anyMatch(
-              size ->
-                size.getBackSoon()
-            )
-        )
-        ||
-        ( // product 'size' type 'special'
-          product.getSizes()
-            .stream()
-            .anyMatch(
-              size ->
-                size.getSpecial()
-            )
-          &&
-          product.getSizes()
-            .stream()
-            .filter(
-              size ->
-                size.getSpecial() &&
-                  (
-                    size.getBackSoon() ||
-                      (	size.getStock() != null
-                        ? size.getStock().getQuantity() > 0
-                        : Boolean.FALSE
-                      )
-                  )
-            ).count() > 0
-          &&
-          product.getSizes()
-            .stream()
-            .filter(
-              size ->
-                !size.getSpecial() &&
-                  (
-                    size.getBackSoon() ||
-                      (	size.getStock() != null
-                        ? size.getStock().getQuantity() > 0
-                        : Boolean.FALSE
-                      )
-                  )
-            ).count() > 0
-        )
-      )
-      .sorted( ( product1, product2 ) -> product1.getSequence().compareTo( product2.getSequence() ) )
+      .filter( product -> {
+        return
+          Product.isProductBacksoon( product ) ||
+          Product.isProductSpecial( product );
+      })
+      .sorted( ( p1, p2 ) -> p1.getSequence().compareTo( p2.getSequence() ) )
       .map( product -> String.valueOf( product.getId() ) )
       .collect(Collectors.toList());
 

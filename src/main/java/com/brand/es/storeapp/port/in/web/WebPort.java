@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 public interface WebPort
 {
-  @GetMapping("/product")
-  ResponseEntity<String> getProduct();
+  @GetMapping("/productstock")
+  ResponseEntity<String> getProductStock();
 }
