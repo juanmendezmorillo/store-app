@@ -1,5 +1,6 @@
 package com.brand.es.storeapp.adapter.in.web;
 
+import com.brand.es.storeapp.adapter.in.web.exception.ResourceNotFoundException;
 import com.brand.es.storeapp.application.ProductService;
 import com.brand.es.storeapp.port.in.web.WebPort;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,10 @@ public class WebController implements WebPort
   @Override
   public ResponseEntity<String> getProductStock()
   {
-    return new ResponseEntity<>(productService.getIdsProducts(), HttpStatus.OK);
+    String ids = productService.getIdsProducts();
+    if (ids.isEmpty()) {
+      throw new ResourceNotFoundException( "There are no products in stock" );
+    }
+    return new ResponseEntity<>(ids, HttpStatus.OK);
   }
 }
