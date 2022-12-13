@@ -4,6 +4,7 @@ import com.brand.es.storeapp.application.ProductService;
 import com.brand.es.storeapp.application.dto.ProductDTO;
 import com.brand.es.storeapp.application.dto.SizeDTO;
 import com.brand.es.storeapp.application.dto.StockDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @SpringBootApplication
 public class StoreAppApplication {
 
@@ -32,9 +34,16 @@ public class StoreAppApplication {
 
 	@PostConstruct
 	private void initializeDataFromFiles() {
-		loadProducts();
-		loadStocks();
-		loadSizes();
+		log.info( "Load data from .csv files" );
+
+		try
+		{
+			loadProducts();
+			loadStocks();
+			loadSizes();
+		} catch( NumberFormatException | ArrayIndexOutOfBoundsException ex ) {
+			log.error("Error load from .csv files");
+		}
 	}
 
 	private void loadProducts() {
@@ -96,7 +105,7 @@ public class StoreAppApplication {
 		}
 		catch( FileNotFoundException e )
 		{
-			System.out.println(file + " does not exist");
+			log.error( file + " does not exist" );
 		}
 		catch( IOException e )
 		{

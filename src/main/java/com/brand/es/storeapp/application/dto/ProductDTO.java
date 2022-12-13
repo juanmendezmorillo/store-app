@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ import java.util.List;
 public class ProductDTO
 {
   private Integer id;
+  @NotNull( message = "Sequence is mandatory")
   private Integer sequence;
   private List<SizeDTO> sizes;
 }
