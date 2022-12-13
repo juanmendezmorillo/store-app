@@ -29,7 +29,7 @@ import java.util.Optional;
 @TestInstance( TestInstance.Lifecycle.PER_CLASS )
 @ActiveProfiles("test")
 @Tag("UnitTest")
-@DisplayName("Product Service Unit Tests")
+@DisplayName("Store Service Unit Tests")
 public class StoreServiceTest
 {
   private DbPort dbPortMock;
