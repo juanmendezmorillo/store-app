@@ -1,7 +1,7 @@
 package com.brand.es.storeapp.adapter.in.web;
 
 import com.brand.es.storeapp.adapter.in.web.exception.ResourceNotFoundException;
-import com.brand.es.storeapp.application.ProductService;
+import com.brand.es.storeapp.application.StoreService;
 import com.brand.es.storeapp.port.in.web.WebPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WebController implements WebPort
 {
-  private ProductService productService;
+  private StoreService storeService;
 
-  public WebController( ProductService productService )
+  public WebController( StoreService productService )
   {
-    this.productService = productService;
+    this.storeService = productService;
   }
 
   @Override
@@ -27,7 +27,7 @@ public class WebController implements WebPort
   {
     log.info( "GET /productstock" );
 
-    String ids = productService.getIdsProducts();
+    String ids = storeService.getIdsProducts();
     if (ids.isEmpty()) {
       throw new ResourceNotFoundException( "There are no products in stock" );
     }

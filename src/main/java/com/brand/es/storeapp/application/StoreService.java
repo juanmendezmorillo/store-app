@@ -9,11 +9,11 @@ import java.util.Optional;
 /**
  * Created by JMENDEZ on 11/12/2022.
  */
-public interface ProductService
+public interface StoreService
 {
-  void saveProduct(ProductDTO product);
-  void saveSize(SizeDTO size);
-  void saveStock(StockDTO stock);
+  Optional<Integer> saveProduct(ProductDTO product);
+  Optional<Integer> saveSize(SizeDTO size);
+  Optional<Integer> saveStock(StockDTO stock);
   Optional<ProductDTO> findProductById(Integer id);
   Optional<StockDTO> findStockById(Integer id);
   String getIdsProducts();

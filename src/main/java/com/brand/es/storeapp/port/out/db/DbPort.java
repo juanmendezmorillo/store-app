@@ -12,9 +12,9 @@ import java.util.Optional;
  */
 public interface DbPort
 {
-  void saveProduct(ProductDTO product);
-  void saveSize(SizeDTO size);
-  void saveStock(StockDTO stock);
+  Optional<Integer> saveProduct(ProductDTO product);
+  Optional<Integer> saveSize(SizeDTO size);
+  Optional<Integer> saveStock(StockDTO stock);
   Optional<ProductDTO> findProductById( Integer id);
   Optional<StockDTO> findStockById( Integer id);
   Optional<List<ProductDTO>> getAllProducts();

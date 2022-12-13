@@ -1,6 +1,6 @@
 package com.brand.es.storeapp;
 
-import com.brand.es.storeapp.application.ProductService;
+import com.brand.es.storeapp.application.StoreService;
 import com.brand.es.storeapp.application.dto.ProductDTO;
 import com.brand.es.storeapp.application.dto.SizeDTO;
 import com.brand.es.storeapp.application.dto.StockDTO;
@@ -21,9 +21,9 @@ import java.util.List;
 @SpringBootApplication
 public class StoreAppApplication {
 
-	private ProductService productService;
+	private StoreService productService;
 
-	public StoreAppApplication( ProductService productService )
+	public StoreAppApplication( StoreService productService )
 	{
 		this.productService = productService;
 	}

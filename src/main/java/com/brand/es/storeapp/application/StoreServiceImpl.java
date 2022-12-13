@@ -16,33 +16,33 @@ import java.util.stream.Collectors;
  * Created by JMENDEZ on 12/12/2022.
  */
 @Service
-public class ProductServiceImpl implements ProductService
+public class StoreServiceImpl implements StoreService
 {
   private DbPort dbPort;
   private ModelMapper modelMapper;
 
-  public ProductServiceImpl( DbPort dbPort, ModelMapper modelMapper )
+  public StoreServiceImpl(DbPort dbPort, ModelMapper modelMapper )
   {
     this.dbPort = dbPort;
     this.modelMapper = modelMapper;
   }
 
   @Override
-  public void saveProduct( ProductDTO product )
+  public Optional<Integer>  saveProduct( ProductDTO product )
   {
-    dbPort.saveProduct( product );
+    return dbPort.saveProduct( product );
   }
 
   @Override
-  public void saveSize( SizeDTO size )
+  public Optional<Integer>  saveSize( SizeDTO size )
   {
-    dbPort.saveSize( size );
+    return dbPort.saveSize( size );
   }
 
   @Override
-  public void saveStock( StockDTO stock )
+  public Optional<Integer>  saveStock( StockDTO stock )
   {
-    dbPort.saveStock( stock );
+    return dbPort.saveStock( stock );
   }
 
   @Override

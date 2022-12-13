@@ -41,21 +41,21 @@ public class DbAdapter implements DbPort
   }
 
   @Override
-  public void saveProduct( ProductDTO product )
+  public Optional<Integer> saveProduct( ProductDTO product )
   {
-    productRepository.save( modelMapper.map( product, ProductEntity.class ) );
+    return Optional.of( productRepository.save( modelMapper.map( product, ProductEntity.class ) ).getId() );
   }
 
   @Override
-  public void saveSize( SizeDTO size )
+  public Optional<Integer> saveSize( SizeDTO size )
   {
-    sizeRepository.save( modelMapper.map( size, SizeEntity.class ) );
+    return Optional.of( sizeRepository.save( modelMapper.map( size, SizeEntity.class ) ).getId() );
   }
 
   @Override
-  public void saveStock( StockDTO stock )
+  public Optional<Integer> saveStock( StockDTO stock )
   {
-    stockRepository.save( modelMapper.map( stock, StockEntity.class ) );
+    return Optional.of( stockRepository.save( modelMapper.map( stock, StockEntity.class ) ).getId() );
   }
 
   @Override
