@@ -1,38 +1,19 @@
 package com.brand.es.storeapp.application.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * Created by JMENDEZ on 11/12/2022.
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 public class StockDTO
 {
   private Integer id;
   private Integer quantity;
-
-  public StockDTO() {}
-
-  public StockDTO( Integer id, Integer quantity )
-  {
-    this.id = id;
-    this.quantity = quantity;
-  }
-
-  public Integer getId()
-  {
-    return id;
-  }
-
-  public void setId( Integer id )
-  {
-    this.id = id;
-  }
-
-  public Integer getQuantity()
-  {
-    return quantity;
-  }
-
-  public void setQuantity( Integer quantity )
-  {
-    this.quantity = quantity;
-  }
 }
