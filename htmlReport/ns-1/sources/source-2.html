@@ -1,0 +1,231 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > StoreAppApplication</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.brand.es.storeapp</a>
+</div>
+
+<h1>Coverage Summary for Class: StoreAppApplication (com.brand.es.storeapp)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StoreAppApplication</td>
+<td class="coverageStat">
+  <span class="percent">
+    90,9%
+  </span>
+  <span class="absValue">
+    (10/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86%
+  </span>
+  <span class="absValue">
+    (43/50)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">StoreAppApplication$$EnhancerBySpringCGLIB$$422a0aad</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    90,9%
+  </span>
+  <span class="absValue">
+    (10/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86%
+  </span>
+  <span class="absValue">
+    (43/50)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.brand.es.storeapp;
+&nbsp;
+&nbsp;import com.brand.es.storeapp.application.StoreService;
+&nbsp;import com.brand.es.storeapp.application.dto.ProductDTO;
+&nbsp;import com.brand.es.storeapp.application.dto.SizeDTO;
+&nbsp;import com.brand.es.storeapp.application.dto.StockDTO;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.springframework.boot.SpringApplication;
+&nbsp;import org.springframework.boot.autoconfigure.SpringBootApplication;
+&nbsp;
+&nbsp;import javax.annotation.PostConstruct;
+&nbsp;import java.io.BufferedReader;
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;import java.io.FileReader;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Arrays;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="fc">&nbsp;@Slf4j</b>
+&nbsp;@SpringBootApplication
+&nbsp;public class StoreAppApplication {
+&nbsp;
+&nbsp;	private StoreService productService;
+&nbsp;
+&nbsp;	public StoreAppApplication( StoreService productService )
+<b class="fc">&nbsp;	{</b>
+<b class="fc">&nbsp;		this.productService = productService;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	public static void main(String[] args)   {
+<b class="nc">&nbsp;		SpringApplication.run(StoreAppApplication.class, args);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@PostConstruct
+&nbsp;	private void initializeDataFromFiles() {
+<b class="fc">&nbsp;		log.info( &quot;Load data from .csv files&quot; );</b>
+&nbsp;
+&nbsp;		try
+&nbsp;		{
+<b class="fc">&nbsp;			loadProducts();</b>
+<b class="fc">&nbsp;			loadStocks();</b>
+<b class="fc">&nbsp;			loadSizes();</b>
+<b class="nc">&nbsp;		} catch( NumberFormatException | ArrayIndexOutOfBoundsException ex ) {</b>
+<b class="nc">&nbsp;			log.error(&quot;Error load from .csv files&quot;);</b>
+<b class="fc">&nbsp;		}</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	private void loadProducts() {
+&nbsp;
+<b class="fc">&nbsp;		readFile(&quot;src/main/resources/csv/product.csv&quot;)</b>
+<b class="fc">&nbsp;			.stream()</b>
+<b class="fc">&nbsp;			.forEach( recordLine -&gt; {</b>
+<b class="fc">&nbsp;				productService.saveProduct(</b>
+<b class="fc">&nbsp;					ProductDTO.builder()</b>
+<b class="fc">&nbsp;						.id( Integer.valueOf( recordLine.get( 0 ).trim() ) )</b>
+<b class="fc">&nbsp;						.sequence( Integer.valueOf( recordLine.get( 1 ).trim() ) ).build()</b>
+&nbsp;				);
+&nbsp;			});
+&nbsp;	}
+&nbsp;
+&nbsp;	private void loadStocks() {
+&nbsp;
+<b class="fc">&nbsp;		readFile(&quot;src/main/resources/csv/stock.csv&quot;)</b>
+<b class="fc">&nbsp;			.stream()</b>
+<b class="fc">&nbsp;			.forEach( recordLine -&gt; {</b>
+<b class="fc">&nbsp;				productService.saveStock(</b>
+<b class="fc">&nbsp;					StockDTO.builder()</b>
+<b class="fc">&nbsp;					.id( Integer.valueOf( recordLine.get( 0 ).trim() ) )</b>
+<b class="fc">&nbsp;					.quantity( Integer.valueOf( recordLine.get( 1 ).trim() ) )</b>
+<b class="fc">&nbsp;					.build()</b>
+&nbsp;				);
+&nbsp;			});
+&nbsp;	}
+&nbsp;
+&nbsp;	private void loadSizes() {
+&nbsp;
+<b class="fc">&nbsp;		readFile(&quot;src/main/resources/csv/size.csv&quot;)</b>
+<b class="fc">&nbsp;			.stream()</b>
+<b class="fc">&nbsp;			.forEach( recordLine -&gt; {</b>
+<b class="fc">&nbsp;				productService.saveSize(</b>
+<b class="fc">&nbsp;					SizeDTO.builder()</b>
+<b class="fc">&nbsp;					.id( Integer.valueOf( recordLine.get( 0 ).trim() ) )</b>
+<b class="fc">&nbsp;					.product( productService.findProductById( Integer.valueOf( recordLine.get( 1 ).trim() ) ).orElse( null ) )</b>
+<b class="fc">&nbsp;					.stock( productService.findStockById( Integer.valueOf( recordLine.get( 0 ).trim() ) ).orElse( null ) )</b>
+<b class="fc">&nbsp;					.backSoon( Boolean.valueOf( recordLine.get( 2 ).trim() ) )</b>
+<b class="fc">&nbsp;					.special( Boolean.valueOf( recordLine.get( 3 ).trim() ) )</b>
+<b class="fc">&nbsp;					.build()</b>
+&nbsp;				);
+&nbsp;			});
+&nbsp;	}
+&nbsp;
+&nbsp;	private List&lt;List&lt;String&gt;&gt; readFile(String file) {
+<b class="fc">&nbsp;		List&lt;List&lt;String&gt;&gt; records = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;		try (BufferedReader br = new BufferedReader(new FileReader(file)))</b>
+&nbsp;		{
+&nbsp;			String line;
+&nbsp;
+<b class="fc">&nbsp;			while( ( line = br.readLine() ) != null )</b>
+&nbsp;			{
+<b class="fc">&nbsp;				String[] values = line.split( &quot;,&quot; );</b>
+<b class="fc">&nbsp;				records.add( Arrays.asList( values ) );</b>
+<b class="fc">&nbsp;			}</b>
+<b class="fc">&nbsp;		}</b>
+<b class="nc">&nbsp;		catch( FileNotFoundException e )</b>
+&nbsp;		{
+<b class="nc">&nbsp;			log.error( file + &quot; does not exist&quot; );</b>
+&nbsp;		}
+<b class="nc">&nbsp;		catch( IOException e )</b>
+&nbsp;		{
+<b class="nc">&nbsp;			e.printStackTrace();</b>
+<b class="fc">&nbsp;		}</b>
+&nbsp;
+<b class="fc">&nbsp;		return records;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-12-13 22:22</div>
+</div>
+</body>
+</html>
