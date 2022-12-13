@@ -1,19 +1,13 @@
 package com.brand.es.storeapp.domain;
 
-import com.brand.es.storeapp.application.dto.ProductDTO;
-import com.brand.es.storeapp.application.dto.SizeDTO;
-import com.brand.es.storeapp.application.dto.StockDTO;
 import org.junit.jupiter.api.*;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by JMENDEZ on 13/12/2022.
