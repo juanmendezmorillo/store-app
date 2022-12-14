@@ -20,7 +20,6 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<modelmapper.version>2.4.4</modelmapper.version>
-		<junit.version>5.8.1</junit.version>
 	</properties>
 
 	<dependencies>
