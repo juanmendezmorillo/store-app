@@ -60,7 +60,7 @@ cambios. En la capa de 'aplicación' se encuentran los 'casos de uso' que serán
 
 
 * La carga de productos se realiza al iniciar la aplicación [Start](#start). 
-Los productos se encuentran en ficheros '.csv' en la ruta 'resources/csv'.
+Los productos se encuentran en ficheros '.csv' en la ruta 'src/main/resources/csv'.
 
 # I'm closing
 
