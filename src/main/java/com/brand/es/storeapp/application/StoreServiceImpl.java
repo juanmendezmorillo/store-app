@@ -6,6 +6,7 @@ import com.brand.es.storeapp.application.dto.StockDTO;
 import com.brand.es.storeapp.domain.Product;
 import com.brand.es.storeapp.domain.ProductStore;
 import com.brand.es.storeapp.port.out.db.DbPort;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +16,13 @@ import java.util.stream.Collectors;
 /**
  * Created by JMENDEZ on 12/12/2022.
  */
+@AllArgsConstructor
 @Service
 public class StoreServiceImpl implements StoreService
 {
   private DbPort dbPort;
   private ModelMapper modelMapper;
-
-  public StoreServiceImpl(DbPort dbPort, ModelMapper modelMapper )
-  {
-    this.dbPort = dbPort;
-    this.modelMapper = modelMapper;
-  }
+  private ProductStore productStore;
 
   @Override
   public Optional<Integer>  saveProduct( ProductDTO product )
@@ -60,13 +57,13 @@ public class StoreServiceImpl implements StoreService
   @Override
   public String getIdsProducts()
   {
-    ProductStore productStore = new ProductStore(
-      dbPort.getAllProducts().get()
-        .stream()
-        .map( productDTO -> modelMapper.map( productDTO, Product.class ) )
-        .collect( Collectors.toList())
-    );
-
-    return productStore.getIdsProductsBySizeAndStock();
+    return
+      productStore.getIdsProductsBySizeAndStock(
+        dbPort.getAllProducts()
+          .get()
+          .stream()
+          .map( productDTO -> modelMapper.map( productDTO, Product.class ) )
+          .collect( Collectors.toList())
+      );
   }
 }

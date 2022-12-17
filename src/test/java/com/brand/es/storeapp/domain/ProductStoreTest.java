@@ -5,6 +5,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ProductStoreTest {
 
     private ProductStore productStore;
-
+    private List<Product> products;
     @BeforeAll
     public void init() {
         Stock stock1 = new Stock(1, 10);
@@ -30,8 +31,9 @@ public class ProductStoreTest {
         Size size3 = new Size(3, stock3, Boolean.TRUE, Boolean.FALSE);
         Product product1 = new Product(1, 10, new ArrayList<>(Arrays.asList(new Size[]{size1})));
         Product product2 = new Product(2, 5, new ArrayList<>(Arrays.asList(new Size[]{size2, size3})));
+        products = new ArrayList<>(Arrays.asList(new Product[]{product1, product2}));
 
-        productStore = new ProductStore(new ArrayList<>(Arrays.asList(new Product[]{product1, product2})));
+        productStore = new ProductStore();
     }
 
     @Test
@@ -39,7 +41,7 @@ public class ProductStoreTest {
     void whenGetIdsProducts_ThenIdsProductsReturned() {
 
         //when
-        String idsProductsFind = productStore.getIdsProductsBySizeAndStock();
+        String idsProductsFind = productStore.getIdsProductsBySizeAndStock(products);
 
         //then
         assertNotNull(idsProductsFind);

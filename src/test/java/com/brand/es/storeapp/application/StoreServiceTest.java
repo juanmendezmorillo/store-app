@@ -1,19 +1,11 @@
 package com.brand.es.storeapp.application;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import com.brand.es.storeapp.application.dto.ProductDTO;
 import com.brand.es.storeapp.application.dto.SizeDTO;
 import com.brand.es.storeapp.application.dto.StockDTO;
+import com.brand.es.storeapp.domain.ProductStore;
 import com.brand.es.storeapp.port.out.db.DbPort;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.ActiveProfiles;
@@ -22,6 +14,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by JMENDEZ on 13/12/2022.
@@ -38,7 +35,7 @@ public class StoreServiceTest
   @BeforeAll
   public void init() {
     dbPortMock = Mockito.mock( DbPort.class );
-    storeService = new StoreServiceImpl( dbPortMock, new ModelMapper() );
+    storeService = new StoreServiceImpl( dbPortMock, new ModelMapper(), new ProductStore());
   }
 
   @Test
