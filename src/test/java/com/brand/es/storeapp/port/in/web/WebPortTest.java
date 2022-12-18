@@ -1,42 +1,60 @@
 package com.brand.es.storeapp.port.in.web;
 
-import com.brand.es.storeapp.StoreAppApplication;
+import com.brand.es.storeapp.application.StoreService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.http.HttpStatus.OK;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Created by JMENDEZ on 13/12/2022.
+ * Created by JMENDEZ on 18/12/2022.
  */
-@SpringBootTest(webEnvironment = RANDOM_PORT, classes = StoreAppApplication.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 @ActiveProfiles("test")
-@DisplayName("WebPort REST API Tests")
 @Tag("IntegrationTest")
+@DisplayName("WebPort Integration Tests")
 public class WebPortTest {
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @Test
-    @DisplayName("when GET ProductIds, then returns 200")
-    public void whenGetProductIds_thenReturns200() {
+  @MockBean
+  private StoreService storeService;
 
-        //when
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity("/api/productstock", String.class);
+  @Test
+  @DisplayName("get the ids of the products with stock")
+  public void getProductStockReturn200() throws Exception {
 
-        //then
-        assertEquals(OK, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody());
-        assertFalse(responseEntity.getBody().isEmpty());
-    }
+    //given
+    given(this.storeService.getIdsProducts()).willReturn("5,1,3");
+
+    //when-then
+    this.mockMvc.perform(get("/api/productstock"))
+      .andExpect(status().isOk());
+
+  }
+
+  @Test
+  @DisplayName("get non exists products ids with stock")
+  public void getNotExistsProductStockReturn404() throws Exception {
+
+    //given
+    given(this.storeService.getIdsProducts()).willReturn("");
+
+    //when-then
+    this.mockMvc.perform(get("/api/productstock"))
+      .andExpect(status().isNotFound());
+
+  }
 
 }
