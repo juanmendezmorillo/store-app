@@ -10,6 +10,7 @@ import com.brand.es.storeapp.application.dto.ProductDTO;
 import com.brand.es.storeapp.application.dto.SizeDTO;
 import com.brand.es.storeapp.application.dto.StockDTO;
 import com.brand.es.storeapp.port.out.db.DbPort;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 /**
  * Created by JMENDEZ on 11/12/2022.
  */
+@AllArgsConstructor
 @Service
 public class DbAdapter implements DbPort
 {
@@ -27,18 +29,6 @@ public class DbAdapter implements DbPort
   private SizeRepository sizeRepository;
   private StockRepository stockRepository;
   private ModelMapper modelMapper;
-
-  public DbAdapter(
-    ProductRepository productRepository,
-    SizeRepository sizeRepository,
-    StockRepository stockRepository,
-    ModelMapper modelMapper )
-  {
-    this.productRepository = productRepository;
-    this.sizeRepository = sizeRepository;
-    this.stockRepository = stockRepository;
-    this.modelMapper = modelMapper;
-  }
 
   @Override
   public Optional<Integer> saveProduct( ProductDTO product )
