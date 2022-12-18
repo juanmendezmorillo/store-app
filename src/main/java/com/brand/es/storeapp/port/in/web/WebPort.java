@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api")
 public interface WebPort {
 
-  @Operation(summary = "Get Product ids ")
+  @Operation(summary = "Obtain product ID depending on the stock and sizes available")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Success|OK"),
+    @ApiResponse(responseCode = "200", description = "Ids, separated by commas"),
     @ApiResponse(responseCode = "404", description = "Not Found!"),
     @ApiResponse(responseCode = "500", description = "Server Error!"),})
   @GetMapping("/productstock")
