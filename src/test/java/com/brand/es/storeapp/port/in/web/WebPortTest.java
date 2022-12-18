@@ -31,7 +31,7 @@ public class WebPortTest {
     public void whenGetProductIds_thenReturns200() {
 
         //when
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity("/productstock", String.class);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity("/api/productstock", String.class);
 
         //then
         assertEquals(OK, responseEntity.getStatusCode());
