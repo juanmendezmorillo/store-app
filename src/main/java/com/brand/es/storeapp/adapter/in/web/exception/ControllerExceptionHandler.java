@@ -2,8 +2,8 @@ package com.brand.es.storeapp.adapter.in.web.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
@@ -14,21 +14,34 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @RestControllerAdvice
-public class ControllerExceptionHandler
-{
+public class ControllerExceptionHandler {
 
-  @ExceptionHandler(ResourceNotFoundException.class)
-  @ResponseStatus(value = HttpStatus.NOT_FOUND)
-  public ErrorMessage resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-    log.error( ex.getMessage() );
+  @ExceptionHandler(ProductNotFoundException.class)
+  public ResponseEntity<ErrorMessage> productNotFoundException(
+    ProductNotFoundException ex, WebRequest request) {
 
-    return new ErrorMessage(
-      HttpStatus.NOT_FOUND.value(),
-      LocalDateTime.now(),
-      ex.getMessage(),
-      request.getDescription( Boolean.FALSE )
-    );
+    log.error(ex.getMessage());
+    return new ResponseEntity<>(
+      new ErrorMessage(
+        HttpStatus.NOT_FOUND.value(),
+        LocalDateTime.now(),
+        ex.getMessage(),
+        request.getDescription(Boolean.FALSE)
+      ), HttpStatus.NOT_FOUND);
+  }
 
+  @ExceptionHandler(ProductInternalException.class)
+  public ResponseEntity<ErrorMessage> productInternalException(
+    ProductInternalException ex, WebRequest request) {
+
+    log.error(ex.getMessage());
+    return new ResponseEntity<>(
+      new ErrorMessage(
+        HttpStatus.INTERNAL_SERVER_ERROR.value(),
+        LocalDateTime.now(),
+        ex.getMessage(),
+        request.getDescription(Boolean.FALSE)
+      ), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
 }

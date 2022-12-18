@@ -1,5 +1,6 @@
-package com.brand.es.storeapp.application;
+package com.brand.es.storeapp.application.impl;
 
+import com.brand.es.storeapp.application.StoreService;
 import com.brand.es.storeapp.application.dto.ProductDTO;
 import com.brand.es.storeapp.application.dto.SizeDTO;
 import com.brand.es.storeapp.application.dto.StockDTO;

@@ -3,6 +3,7 @@ package com.brand.es.storeapp.application;
 import com.brand.es.storeapp.application.dto.ProductDTO;
 import com.brand.es.storeapp.application.dto.SizeDTO;
 import com.brand.es.storeapp.application.dto.StockDTO;
+import com.brand.es.storeapp.application.impl.StoreServiceImpl;
 import com.brand.es.storeapp.domain.ProductStore;
 import com.brand.es.storeapp.port.out.db.DbPort;
 import org.junit.jupiter.api.*;
