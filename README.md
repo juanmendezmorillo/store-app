@@ -14,6 +14,16 @@ Verifique que pueda compilar y pasar las pruebas:
 mvn clean test
 ```
 
+Para informe de prueba y cobertura de código:
+
+```
+mvn surefire-report:report
+open target/site/surefire-report.html
+
+mvn jacoco:report
+open target/site/jacoco/index.html
+```
+
 ### <a id="start" />Start
 
 Ejecutar la API de back-end localmente:
@@ -37,10 +47,11 @@ Para acceder a la base de datos (H2) en modo dev:
 open http://localhost:8080/h2-console 
 ```
 
-API Endpoint (Obtiene 'ids' de productos con stock):
+API Documentación (Swagger):
 
 ```
-open http://localhost:8080/productstock
+open http://localhost:8080/v3/api-docs
+open http://localhost:8080/swagger-ui.html
 ```
 
 # Development Steps
@@ -50,19 +61,22 @@ open http://localhost:8080/productstock
 datos de la base de datos y sólo se centre en el 'negocio' y para ello contiene sus propias clases y métodos.
 Con esta arquitectura conseguimos que la capa de 'dominio' no se vea afectada por cambios en las 'capas externas' 
 como pueden ser los 'adaptadores' en los que se encuentran la implementación de los puertos de 
-entrada (llamadas de un cliente) y salida (operaciones en base de datos). Estas capas externas son más propicias a los 
-cambios. En la capa de 'aplicación' se encuentran los 'casos de uso' que serán igualmente cambiantes.
+entrada (por ejemplo llamadas Http desde un cliente) y salida (operaciones en base de datos). 
+Estas capas externas son más propicias a los cambios. En la capa de 'aplicación' se encuentran los 'casos de uso' 
+que serán igualmente cambiantes.
 
 
-* La versión utilizada de 'spring-boot' es la '2.7.6'. Como base de datos se ha utilizado 'h2'(se ejecuta en memoria), 
+* La carga de productos se realiza al iniciar la aplicación [Start](#start). Dentro del paquete 'loaddata' esta la 
+clase que carga los ficheros '.csv'.
+
+
+* La versión utilizada de 'spring-boot' es la '2.7.6', como base de datos se ha utilizado 'h2'(se ejecuta en memoria), 
 'flyway' para cargar el esquema en 'h2', 'jpa' para las operaciones con la base de datos, 'lombok', 'modelmapper', 
-'validation', 'Junit 5' y todo ello utilizando 'programación funcional' con Java 8.
+'validation', 'Junit 5', 'openapi', 'jacoco' y 'programación funcional' con Java 8.
 
 
-* La carga de productos se realiza al iniciar la aplicación [Start](#start). 
-Los productos se encuentran en ficheros '.csv' en la ruta 'src/main/resources/csv'.
+#### Gracias por su atención.
 
-# I'm closing
 
-Gracias :)
+
 
